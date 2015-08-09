@@ -1,3 +1,4 @@
 /vendor/*
+!/vendor/README.md
 /.settings/
 /.project
