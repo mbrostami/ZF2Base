@@ -1,0 +1,55 @@
+<?php /* @var $collector \ZF2Base\Toolbar\Collector\PermissionCollector */  
+$data = $collector->getPermissionData(); 
+$acceptedResource = $data['acceptedResource'];
+$toolbarItems = '';
+$itemCount = 0;
+$acceptedCount = 0;
+$deniedCount = 0;
+foreach ($data['allResources'] as $resourceName => $resourceValue) {
+    $isDenied = false;
+    if (in_array($resourceName, $data['deniedResources'])) {
+        $isDenied = true;
+    }
+    $toolbarItems .= '<span class="zdt-toolbar-info">';
+    if ($isDenied) {
+        $deniedCount++;
+        $toolbarItems .= '<span class="zdt-detail-label" style="color:red;text-transform: none;">' . $resourceName . '</span>';
+    } elseif ($acceptedResource && $data['lastMatchedResource'] == $resourceName) {
+		$acceptedCount++;
+		$toolbarItems .= '<span class="zdt-detail-label" style="color:#80DC09;text-transform: none;">' . $resourceName . ' ( ' . $acceptedResource . ' ) </span>';
+	}  else {
+		$toolbarItems .= '<span class="zdt-detail-label" style="text-transform: none;">' . $resourceName . '</span>';
+	}
+	$itemCount++;
+	
+	$toolbarItems .= '<div class="zdt-detail-context">';
+	if ($isDenied) {
+	    $toolbarItems .= 'Value : <span >' . $resourceValue . '</span>';
+	} else {
+	    $toolbarItems .= 'Value : <span >' . $resourceValue . '</span>';
+	}
+    $toolbarItems .= '</div></span>';
+}  
+?>
+ <div class="zdt-toolbar-entry">
+    <div class="zdt-toolbar-preview">
+   		<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAGFJREFUeNpiYKAF+P//vz8Q3/+PACC2P7Ga7ZE0ngfi/Uh8e2IMOA9VHI/mIrCBxBiAVSHMJejiTDjM+UBseDFRM+Tz/xMP8rG5QIAE+wSo5oVRA1AN+ECCvg9USz8AAQYA7CSLoyyddUgAAAAASUVORK5CYII="/>
+        <span class="zdt-toolbar-info" <?php echo ($data['acceptedResource']?"":"style='color:red;'")?>>
+            <?php if ($data['acceptedResource']) { ?>
+            Permissions ( <span><?php echo $itemCount;?></span> , <span style="color:#80DC09"><?php echo $acceptedCount;?></span> , <span style="color:red"><?php echo $deniedCount;?></span> )
+            <?php } else {?>
+            Permissions ( <span style="color:#fff"><?php echo $itemCount;?></span> , <span style="color:#80DC09"><?php echo $acceptedCount;?></span> , <span style="color:red"><?php echo $deniedCount;?></span> )
+             <?php }?>
+        </span>
+    </div>
+    <?php //zdt-toolbar-detail-redundant ?>
+    <div class="zdt-toolbar-detail zdt-toolbar-detail-overflow" style="width:300px;"> 
+         <?php echo $toolbarItems; ?>
+        <span class="zdt-toolbar-info zdt-toolbar-info-redundant zdt-toolbar-topspacing">
+            <span class="zdt-detail-label">Permissions</span>
+            <span class="zdt-detail-value zdt-detail-value-right">
+                <?php echo count($data['allResources']); ?>
+            </span>
+        </span>
+    </div>
+</div>
