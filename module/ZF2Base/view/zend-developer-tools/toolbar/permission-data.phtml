@@ -7,7 +7,7 @@ $acceptedCount = 0;
 $deniedCount = 0;
 foreach ($data['allResources'] as $resourceName => $resourceValue) {
     $isDenied = false;
-    if (in_array($resourceName, $data['deniedResources'])) {
+    if (array_key_exists($resourceName, $data['deniedResources'])) {
         $isDenied = true;
     }
     $toolbarItems .= '<span class="zdt-toolbar-info">';
@@ -22,14 +22,10 @@ foreach ($data['allResources'] as $resourceName => $resourceValue) {
 	}
 	$itemCount++;
 	
-	$toolbarItems .= '<div class="zdt-detail-context">';
-	if ($isDenied) {
-	    $toolbarItems .= 'Value : <span >' . $resourceValue . '</span>';
-	} else {
-	    $toolbarItems .= 'Value : <span >' . $resourceValue . '</span>';
-	}
+	$toolbarItems .= '<div class="zdt-detail-context">'; 
+    $toolbarItems .= 'Value : <span >' . $resourceValue . '</span>'; 
     $toolbarItems .= '</div></span>';
-}  
+} 
 ?>
  <div class="zdt-toolbar-entry">
     <div class="zdt-toolbar-preview">
@@ -44,6 +40,11 @@ foreach ($data['allResources'] as $resourceName => $resourceValue) {
     </div>
     <?php //zdt-toolbar-detail-redundant ?>
     <div class="zdt-toolbar-detail zdt-toolbar-detail-overflow" style="width:300px;"> 
+        <span style="font-size: 16px;text-align:center;">
+            <span class="zdt-detail-label" style="text-transform: none;display: block;border-bottom: 1px solid #888 !important;padding: 0 0 8px 0;">
+                <?php echo $data['mainResource'];?>
+            </span> 
+        </span>
          <?php echo $toolbarItems; ?>
         <span class="zdt-toolbar-info zdt-toolbar-info-redundant zdt-toolbar-topspacing">
             <span class="zdt-detail-label">Permissions</span>

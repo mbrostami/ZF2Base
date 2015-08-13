@@ -3,6 +3,7 @@ namespace ZF2Base\Abstracts;
 
 use Zend\ServiceManager\ServiceManager; 
 use ZF2Base\Services\Authentication;
+use ZF2Base\Interfaces\ResourceDbAdapterInterface;
 
 /**
  * Abstract class for resource db adapters 
@@ -10,7 +11,7 @@ use ZF2Base\Services\Authentication;
  * 
  * @author MB Rostami <mb.rostami.h@gmail.com>
  */
-abstract class AbstractResourceDbAdapter
+abstract class AbstractResourceDbAdapter implements ResourceDbAdapterInterface
 { 
     /**
      * @var string|null

@@ -11,6 +11,7 @@ class PermissionCollector implements CollectorInterface
 	protected $allowedResources;
 	protected $deniedPermissions;
 	protected $acceptedResource;
+	protected $mainResource;
 	protected $lastMatchedResource;
 	  
     /**
@@ -36,6 +37,7 @@ class PermissionCollector implements CollectorInterface
     public function collect(MvcEvent $mvcEvent)
     { 
         $resourceDbAdapter = $mvcEvent->getApplication()->getServiceManager()->get('ResourceDbAdapterFactory');
+        $this->mainResource = $resourceDbAdapter->mainResource;
         $isAllowed = true;
         if ($resourceDbAdapter) {
             /* @var $resourceDbAdapter \ZF2Base\Abstracts\AbstractResourceDbAdapter */
@@ -63,6 +65,7 @@ class PermissionCollector implements CollectorInterface
         $data['allResources']       = $this->allResources; 
         $data['acceptedResource']   = $this->acceptedResource; 
         $data['lastMatchedResource'] = $this->lastMatchedResource; 
+        $data['mainResource']       = $this->mainResource; 
         return $data;
     }
 }

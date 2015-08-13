@@ -16,6 +16,8 @@ use ZF2Base\Listeners\Access;
 use ZF2Base\Services\Authentication;
 use ZF2Base\Services\PermissionService;
 use ZF2Base\Listeners\Error;
+use Zend\ServiceManager\AbstractPluginManager;
+use ZF2Base\Plugins\GetAccess;
 
 class Module
 {	
@@ -35,6 +37,17 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
 
+    public function getControllerPluginConfig()
+    {
+        return array(
+            'factories' => array(
+                'getAccess' => function (AbstractPluginManager $pluginManager) {
+                    return new GetAccess($pluginManager->getServiceLocator()->get('ResourceDbAdapterFactory'));
+                }
+            )
+        );    
+    }
+    
     public function getAutoloaderConfig()
     {
         return array(

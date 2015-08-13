@@ -1,1 +1,21 @@
-<h1>HELLO</h1>
+<h1>Sample Module</h1>
+<?php 
+if ($this->message) {
+    echo "<h4>{$this->message}</h4>";
+} 
+?>
+<div class="row">
+    <div class="col-md-6">
+        <?php 
+        if (!$this->identity()) {
+            $this->loginForm->prepare();
+            echo $this->form($this->loginForm);
+        } else { ?>
+            <form action="" method="post">
+                <input type="submit" value="Logout" name="logout"/>
+            </form>    
+        <?php 
+        }
+        ?>
+    </div>
+</div>

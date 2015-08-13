@@ -16,7 +16,7 @@ class DefaultResourceDbAdapter extends AbstractResourceDbAdapter
      */
     public function checkResource($resource)
     {
-        $this->getAllowedResources();
+        $this->getAllowedResources(); 
         if ($this->allowedResources) {
             if (array_key_exists($resource, $this->allowedResources)) {
                 $this->lastMatchedResource = $resource;
@@ -77,32 +77,40 @@ class DefaultResourceDbAdapter extends AbstractResourceDbAdapter
         $this->getSubResources(); 
         if ($this->resources) {
             foreach ($this->resources as $resourceName => $resource) {
-                if ($resource['type'] != 'default') {
+                if ($resource['type'] !== 'default') {
                     continue;
                 }
                 $this->allowedResources[$resourceName] = true;
                 if ($this->subResources && array_key_exists($resourceName, $this->subResources)) {
-                    foreach ($this->subResources as $subResource) {
+                    foreach ($this->subResources[$resourceName] as $subResource) {
                         $this->allowedResources[$subResource['sub_resource']] = true;
                     }
                 }
             }
         } 
         
-        // Get user and users groups resources and merge these two together
-        $this->getGroupResources(1); 
-        $this->getUserResources(1);
-        $allResources = array_merge($this->groupResources, $this->userResources);
-        if ($allResources) {
-            foreach ($allResources as $resourceName => $resourceValue) {
-                // Deny access for resources which has deny value
-                if ($resourceValue == 'deny') {
-                    $this->deniedResources[$resourceName] = $resourceValue;
-                    continue;
+
+        if ($this->userData) {
+            // Get user and users groups resources and merge these two together
+            $this->getGroupResources($this->userData->id); 
+            $this->getUserResources($this->userData->id);
+            $allResources = array_merge($this->groupResources, $this->userResources); 
+            if ($allResources) {
+                foreach ($allResources as $resourceName => $resourceValue) {
+                    // Deny access for resources which has deny value
+                    if ($resourceValue === 'deny') {
+                        $this->deniedResources[$resourceName] = $resourceValue;
+                        if ($this->subResources && array_key_exists($resourceName, $this->subResources)) {
+                            foreach ($this->subResources[$resourceName] as $subResource) {
+                                $this->deniedResources[$subResource['sub_resource']] = 'deny';
+                            }
+                        }
+                        continue;
+                    }
+                    $this->allowedResources[$resourceName] = $resourceValue;
                 }
-                $this->allowedResources[$resourceName] = $resourceValue;
-            }
-        }   
+            }   
+        }
         return $this->allowedResources;
     }
     
@@ -114,17 +122,24 @@ class DefaultResourceDbAdapter extends AbstractResourceDbAdapter
         if ($this->deniedResources) {
             return $this->deniedResources;
         }
-        // Get user resources for cheking deny values. 
-        // NOTE: group resources don't have deny values | logical
-        $this->getUserResources(1); 
-        if ($this->userResources) {
-            foreach ($this->userResources as $resourceName => $resourceValue) {
-                // Deny access for resources which has deny value
-                if ($resourceValue == 'deny') {
-                    $this->deniedResources[$resourceName] = $resourceValue; 
-                } 
-            }
-        }  
+        if ($this->userData) {
+            // Get user resources for cheking deny values. 
+            // NOTE: group resources don't have deny values | logical
+            $this->getUserResources($this->userData->id); 
+            if ($this->userResources) {
+                foreach ($this->userResources as $resourceName => $resourceValue) {
+                    // Deny access for resources which has deny value
+                    if ($resourceValue === 'deny') {
+                        $this->deniedResources[$resourceName] = $resourceValue; 
+                        if ($this->subResources && array_key_exists($resourceName, $this->subResources)) {
+                            foreach ($this->subResources[$resourceName] as $subResource) {
+                                $this->deniedResources[$subResource['sub_resource']] = 'deny';
+                            }
+                        }
+                    } 
+                }
+            }  
+        }
         return $this->deniedResources;
     }
     
@@ -136,11 +151,17 @@ class DefaultResourceDbAdapter extends AbstractResourceDbAdapter
         if ($this->groupResources) {
             return $this->groupResources;
         }
+        $this->getSubResources();
         $groupPermissionsTable = $this->modelFactory->getModel('ZF2Base\Models\Table\GroupPermissionsTable');
         $resources = $groupPermissionsTable->getGroupsResources($userId);
         if ($resources) {
             foreach ($resources as $resource) {
                 $this->groupResources[$resource['resource']] = $resource['value'];
+                if ($this->subResources && array_key_exists($resource['resource'], $this->subResources)) {
+                    foreach ($this->subResources[$resource['resource']] as $subResource) {
+                        $this->groupResources[$subResource['sub_resource']] = true;
+                    }
+                }
             }
         }
         return $this->groupResources;
@@ -159,6 +180,11 @@ class DefaultResourceDbAdapter extends AbstractResourceDbAdapter
         if ($resources) {
             foreach ($resources as $resource) {
                 $this->userResources[$resource['resource']] = $resource['value'];
+                if ($this->subResources && array_key_exists($resource['resource'], $this->subResources)) {
+                    foreach ($this->subResources[$resource['resource']] as $subResource) {
+                        $this->userResources[$subResource['sub_resource']] = true;
+                    }
+                }
             }
         }
         return $this->userResources;
