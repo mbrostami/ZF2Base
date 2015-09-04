@@ -2,9 +2,9 @@
 return array(
     // This should be an array of module namespaces used in the application.
     'modules' => array(   
+        	'ZF2Base',  
         	'Sample',  
         	// 'ZendDeveloperTools',
-        	'ZF2Base',  
     ),
 
     // These are various options for the listeners attached to the ModuleManager

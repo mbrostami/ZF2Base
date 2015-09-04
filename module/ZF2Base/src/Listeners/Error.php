@@ -7,15 +7,19 @@ use Zend\Http\Response;
 use Zend\Feed\PubSubHubbub\HttpResponse;
 use Zend\EventManager\EventManagerInterface;
 use ZF2Base\Interfaces\UnauthorizedStrategyInterface;
+use Zend\View\Model\ViewModel;
 
 class Error implements ListenerAggregateInterface
 {
     const EVENT_ACCESS_DENIED = 'error.zf2base.unauthorized'; 
     
+    protected $showError;
+    
     public function attach(EventManagerInterface $events, $priority = 1)
     {
         $this->events = $events; 
         $this->listeners[] = $events->attach(self::EVENT_ACCESS_DENIED, array($this, 'unAuthorizedAction'), -100);
+        $this->listeners[] = $events->attach(MvcEvent::EVENT_RENDER, array($this, 'setError'), -100);
     }
     
     /**
@@ -44,6 +48,14 @@ class Error implements ListenerAggregateInterface
             if ($unauthorizedStrategyClass instanceof UnauthorizedStrategyInterface) {
                 $unauthorizedStrategyClass->setError($event);
             }
+            $this->showError = true;
         }  
     } 
+    
+    public function setError(MvcEvent $event)
+    {  
+    	if ($this->showError) { 
+    		$event->getViewModel()->setTemplate('error/index');
+    	}
+    }
 }

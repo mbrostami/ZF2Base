@@ -93,8 +93,8 @@ class DefaultResourceDbAdapter extends AbstractResourceDbAdapter
         if ($this->userData) {
             // Get user and users groups resources and merge these two together
             $this->getGroupResources($this->userData->id); 
-            $this->getUserResources($this->userData->id);
-            $allResources = array_merge($this->groupResources, $this->userResources); 
+            $this->getUserResources($this->userData->id); 
+            $allResources = array_merge($this->groupResources, $this->userResources);
             if ($allResources) {
                 foreach ($allResources as $resourceName => $resourceValue) {
                     // Deny access for resources which has deny value
@@ -151,6 +151,7 @@ class DefaultResourceDbAdapter extends AbstractResourceDbAdapter
         if ($this->groupResources) {
             return $this->groupResources;
         }
+        $this->groupResources = array();
         $this->getSubResources();
         $groupPermissionsTable = $this->modelFactory->getModel('ZF2Base\Models\Table\GroupPermissionsTable');
         $resources = $groupPermissionsTable->getGroupsResources($userId);
@@ -175,6 +176,7 @@ class DefaultResourceDbAdapter extends AbstractResourceDbAdapter
         if ($this->userResources) {
             return $this->userResources;
         }
+        $this->userResources = array();
         $userPermissionsTable = $this->modelFactory->getModel('ZF2Base\Models\Table\UserPermissionsTable');
         $resources = $userPermissionsTable->getUsersResources($userId); 
         if ($resources) {

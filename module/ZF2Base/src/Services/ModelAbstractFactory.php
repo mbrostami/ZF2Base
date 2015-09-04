@@ -9,6 +9,7 @@ class ModelAbstractFactory implements AbstractFactoryInterface
 {
 	public function canCreateServiceWithName(ServiceLocatorInterface $locator, $name, $requestedName)
 	{
+
 	    $config = $locator->get("Config");
 	    // Check if given service name is matched by model service identity pattern
 	    if (preg_match("/" . $config['zf2base_config']['model_services_identity_pattern'] . "/i", $requestedName)) {

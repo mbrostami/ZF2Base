@@ -58,7 +58,7 @@ class Access implements ListenerAggregateInterface
 	    if ($resourceDbAdapter) {
 	        /* @var $resourceDbAdapter \ZF2Base\Abstracts\AbstractResourceDbAdapter */
 	        $isAllowed = $resourceDbAdapter->checkResource($resource);
-	    } 
+	    }   
 	    if (!$isAllowed) { 
 	        $event->getApplication()->getEventManager()->trigger(Error::EVENT_ACCESS_DENIED, $event);
 	    }   
