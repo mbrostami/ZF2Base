@@ -12,11 +12,10 @@ namespace ZF2Base;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent; 
 use Zend\ServiceManager\ServiceManager;
-use ZF2Base\Listeners\Access; 
-use ZF2Base\Services\Authentication;
-use ZF2Base\Services\PermissionService;
-use ZF2Base\Listeners\Error;
 use Zend\ServiceManager\AbstractPluginManager;
+use ZF2Base\Listeners\Access; 
+use ZF2Base\Listeners\Error;
+use ZF2Base\Services\Authentication; 
 use ZF2Base\Plugins\GetAccess;
 
 class Module
