@@ -1,6 +1,6 @@
 # ZF2Base
-Base ACL+Authentication module for Zend Framrwork 2 
-ZF2Base can auto check that a user has access to method|module|controller|action or not besides you can add custom permissions and check access in view or controller inside.
+Base ACL+Authentication module for Zend Framrwork 2   
+ZF2Base can auto check that a user has access to method|module|controller|action or not besides you can add custom permissions and check access in view or controller inside.  
 
 ## Scenario
 
@@ -13,7 +13,7 @@ ZF2Base can auto check that a user has access to method|module|controller|action
 You can write your own ResourceFactory.  
 You can write your own ResourceDbFactory.  
 Besides resources for route permissions, you can add resources and check access in controller or view. `$this->hasAccess('resourceName')`  
-For working route access you don't need to write any additional code in your modules.
+For working route access you don't need to write any additional code in your modules.  
 You can use regex pattern in your resources. If you define `get-*` as a resource, who has access to this resource, will have access to all get requests. You can do that for one module or one controller and so on. e.g : `(post|get)-admin-*` for access to all controllers inside admin module. 
 
 
