@@ -12,7 +12,7 @@ ZF2Base can auto check that a user has access to method|module|controller|action
 
 You can write your own ResourceFactory.  
 You can write your own ResourceDbFactory.  
-Besides resources for route permissions, you can add resources and check access in controller or view. `$this->hasAccess('resourceName')`  
+Besides resources for route permissions, you can add resources and check access in controller. `$this->getAccess('resourceName')`  
 For working route access you don't need to write any additional code in your modules.  
 You can use regex pattern in your resources. If you define `get-*` as a resource, who has access to this resource, will have access to all get requests. You can do that for one module or one controller and so on. e.g : `(post|get)-admin-*` for access to all controllers inside admin module. 
 
@@ -42,7 +42,7 @@ You can use regex pattern in your resources. If you define `get-*` as a resource
 
   * Import zf2base.sql to database.
   * Add ZF2Base module to your project and enable it.
-  * Define group and users in databse.  
+  * Define group and users in database.  
   * Define resources which you need in resources table.
   * Assign resources to group or user in databse (user_permissions | group_permissions).  
 
