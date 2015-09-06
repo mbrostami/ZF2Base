@@ -37,12 +37,10 @@ return array(
             "identity_column" 		          => "username",
             "credential_column"    	          => "password",
             "credential_treatment" 	          => "?",
-            "credential_treatment_as_client"  => "?",
             "session_name" 			          => "logged_in_user",
             "fetch_columns" 		          => array(
                 "id",
-                "username" ,
-                "level",
+                "username" , 
                 "user_groups"
             ),
             "ignore_columns" 		          => null

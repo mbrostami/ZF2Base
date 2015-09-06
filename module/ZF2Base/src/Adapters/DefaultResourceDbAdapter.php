@@ -5,7 +5,7 @@ use Zend\ServiceManager\ServiceManager;
 use ZF2Base\Abstracts\AbstractResourceDbAdapter;
 
 /** 
- * Resource db adapter is a layer between permission service and database
+ * Resource db adapter is for getting resources from database
  * 
  * @author MB Rostami <mb.rostami.h@gmail.com>
  */
