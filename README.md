@@ -44,4 +44,9 @@ You can use regex pattern in your resources. If you define `get-*` as a resource
   * Add ZF2Base module to your project and enable it.
   * Define group and users in databse.  
   * Define resources which you need in resources table.
-  * Assign resources to group or user in databse (user_permissions | group_permissions).
+  * Assign resources to group or user in databse (user_permissions | group_permissions).  
+
+## Guide 
+  
+![ZF2Base Simple Guide](https://cdn.rawgit.com/mbrostami/ZF2Base/master/zf2base-workflow.jpg)
+
