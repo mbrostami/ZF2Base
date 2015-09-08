@@ -12,7 +12,7 @@ ZF2Base can auto check that a user has access to method|module|controller|action
 
 You can write your own ResourceFactory.  
 You can write your own ResourceDbFactory.  
-Besides resources for route permissions, you can add resources and check access in controller. `$this->getAccess('resourceName')`  
+Besides resources for route permissions, you can add resources and check access in controller/view. `$this->getAccess('resourceName')`  
 For working route access you don't need to write any additional code in your modules.  
 You can use regex pattern in your resources. If you define `get-*` as a resource, who has access to this resource, will have access to all get requests. You can do that for one module or one controller and so on. e.g : `(post|get)-admin-*` for access to all controllers inside admin module. 
 
@@ -32,6 +32,10 @@ You can use regex pattern in your resources. If you define `get-*` as a resource
   * `sub_resources` | if a resource is accessible by a user/group then that user/group has access to it's sub resources
   * `group_permissions` | which group has access to which resources (value field is for using in the future)
   * `user_permissions` | which user has or HAS NOT(deny) access to which resources
+
+If you insert a record in `user_permissions` with `deny` value, it means that this access is denied and will override on user group same resource.  
+If you insert a record in `resources` with `default` type, it means that every body has access to this resource.  
+Value columns in `group_permissions` and `user_permissions` is for using in the future.
 
 ### Configs
 
@@ -87,6 +91,7 @@ return array(
             'ZF2BaseDbAdapter' => 'Zend\Db\Adapter\Adapter',
             'Zend\Authentication\AuthenticationService' => 'AuthenticationService'
         ),
+	// By this abstract_factory you can get your model from service manager without define model service. 
         'abstract_factories' => array(
             'ZF2Base\Services\ModelAbstractFactory'
         ),
