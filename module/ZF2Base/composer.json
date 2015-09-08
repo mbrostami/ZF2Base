@@ -1,0 +1,34 @@
+{
+    "name": "zf2base/zf2base",
+    "description": "Base acl+authentication module for zend framework 2",
+    "type": "library",
+    "homepage": "https://github.com/mbrostami/zf2base",
+    "authors": [
+        {
+            "name":      "Mohamad Rostami",
+            "email":     "mb.rostami.h@gmail.com",
+            "role":      "Developer"
+        } 
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zend-permissions-acl": "~2.2",
+        "zendframework/zend-mvc":             "~2.2",
+        "zendframework/zend-eventmanager":    "~2.2",
+        "zendframework/zend-servicemanager":  "~2.2",
+        "zendframework/zend-http":            "~2.2",
+        "zendframework/zend-view":            "~2.2",
+        "zendframework/zend-cache":           "~2.2"
+    },
+    "require-dev": {  
+        "zendframework/zend-developer-tools": "0.*"
+    },
+    "suggests": {
+        "zendframework/zend-developer-tools": "if you want to see permission details"
+    },
+    "autoload": {
+        "psr-0": {
+            "ZF2Base\\": "src/"
+        }
+    },
+}
