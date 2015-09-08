@@ -12,17 +12,17 @@ class IndexController extends AbstractActionController
   	public function indexAction()
   	{  
   	    $this->getServiceLocator()->get("Sample\Model\TestTable");
-  	    $hasAccess = $this->getAccess('zf2base-hello');
+  	    // $testHasAccessToSomeResource = $this->getAccess('test-sample-resource');
   	    // $this->identity();
   	    
   	    $loginForm = new LoginForm();
   	    $view['loginForm'] = $loginForm;
-  	    $request = $this->getRequest();
+  	    $request = $this->getRequest();  
   	    if ($request->isPost()) {
   	        $postData = $request->getPost();
   	        $authenticationService = $this->getServiceLocator()->get('AuthenticationService');
   	        if (!isset($postData['logout'])) {
-      	        $loginForm->setData($postData);
+      	        $loginForm->setData($postData); 
       	        if ($loginForm->isValid()) {
       	            $formData = $loginForm->getData();
       	            if ($authenticationService->authentication($formData['username'], $formData['password'])) {
@@ -32,6 +32,7 @@ class IndexController extends AbstractActionController
       	                $view['message'] = 'Error';
       	                // TODO flash messanger
       	            }
+      	            return $this->redirect()->refresh();
       	        }
   	        } else {
   	            $authenticationService->logOut();

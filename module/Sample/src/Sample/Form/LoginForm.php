@@ -24,7 +24,8 @@ class LoginForm extends Form
         $password->setAttribute('class', 'form-control');
         
         $submit = new Element\Submit('submit');
-        $submit->setValue('Login');
+        $submit->setAttribute('class', 'btn btn-default');
+        $submit->setValue('Sign in');
         
         $this->add($username);
         $this->add($password);

@@ -91,5 +91,18 @@ return array(
             'zend-developer-tools/toolbar/permission-data'
             => __DIR__ . '/../view/zend-developer-tools/toolbar/permission-data.phtml', 
         ),
-    )
+    ),
+    'view_manager' => array(
+        'display_not_found_reason' => true,
+        'display_exceptions'       => true, 
+        'not_found_template'       => 'error/404',
+        'exception_template'       => 'error/index',
+        'template_map' => array( 
+            'error/404'               => __DIR__ . '/../view/error/404.phtml',
+            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+        ),
+        'template_path_stack' => array(
+            __DIR__ . '/../view',
+        ),
+    ),
 );

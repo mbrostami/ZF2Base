@@ -39,27 +39,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
 
 INSERT INTO `groups` (`id`, `name`, `description`, `level`) VALUES
 (1, 'Group 1', 'Group 1', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `group_permissions`
---
-
-CREATE TABLE IF NOT EXISTS `group_permissions` (
-  `resource_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL,
-  `value` varchar(255) NOT NULL DEFAULT 'true'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `group_permissions`
---
-
-INSERT INTO `group_permissions` (`resource_id`, `group_id`, `value`) VALUES
-(1, 1, 'value1 - true'),
-(2, 1, 'sample value');
-
+ 
 -- --------------------------------------------------------
 
 --
@@ -80,8 +60,9 @@ CREATE TABLE IF NOT EXISTS `resources` (
 --
 
 INSERT INTO `resources` (`id`, `resource`, `type`, `label`, `level`, `extra_group`) VALUES
-(1, 'zf2base-*', 'route', 'zf2base-*', 1, 'general'),
-(2, 'get-sample-*', 'route', 'get-sample-*', 1, 'general');
+(1, 'zf2base-*', 'route', 'Test resource', 1, 'general'),
+(2, '(get|post)-sample-*', 'route', 'Access to post and get request on sample module', 1, 'default'),
+(3, 'test-sample-resource', 'route', 'Test resource', 1, 'general');
 
 -- --------------------------------------------------------
 
@@ -102,6 +83,26 @@ CREATE TABLE IF NOT EXISTS `sub_resources` (
 INSERT INTO `sub_resources` (`id`, `sub_resource`, `resource_id`) VALUES
 (1, 'zf2base-sub1', 1),
 (2, 'zf2base-sub2', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `group_permissions`
+--
+
+CREATE TABLE IF NOT EXISTS `group_permissions` (
+  `resource_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  `value` varchar(255) NOT NULL DEFAULT 'true'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `group_permissions`
+--
+
+INSERT INTO `group_permissions` (`resource_id`, `group_id`, `value`) VALUES
+(1, 1, 'value1 - true'),
+(2, 1, 'sample value');
 
 -- --------------------------------------------------------
 
@@ -158,7 +159,8 @@ CREATE TABLE IF NOT EXISTS `user_permissions` (
 --
 
 INSERT INTO `user_permissions` (`resource_id`, `user_id`, `value`) VALUES
-(1, 1, 'deny');
+(1, 1, 'deny'),
+(3, 1, 'some value');
 
 --
 -- Indexes for dumped tables
