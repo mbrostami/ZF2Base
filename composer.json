@@ -21,7 +21,7 @@
         "zendframework/zend-developer-tools": "if you want to see permission details"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "ZF2Base\\": "src/"
         }
     }
