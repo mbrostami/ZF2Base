@@ -11,8 +11,7 @@
         } 
     ],
     "require": {
-        "php": ">=5.3.3", 
-        "zendframework/zendframework":">=2.2"
+        "php": ">=5.3.3"
     },
     "require-dev": {  
         "zendframework/zend-developer-tools": "0.*"
