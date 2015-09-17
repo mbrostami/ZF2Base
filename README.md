@@ -143,7 +143,6 @@ return array(
     ),
 );
 ```
-
 ## Installation
 
   * Import zf2base.sql to database.
@@ -151,6 +150,8 @@ return array(
   * Define group and users in database.  
   * Define resources which you need in resources table.
   * Assign resources to group or user in databse (user_permissions | group_permissions).  
+  * Install using composer without zf2 `composer require zf2base/zf2base "dev-master"`
+  * Install using composer with zf2 `composer require zf2base/zf2base`
 
 ## Guide 
   
